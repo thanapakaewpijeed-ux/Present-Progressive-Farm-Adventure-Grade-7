@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Present Progressive Farm Adventure</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--sky:#bfe6f7;--grass:#6cc04a;--grass2:#4a9c35;--soil:#8b5a2b;--card:#fffdf5;--ink:#2b2a22;--muted:#6b6a5a;--ok:#2e9e4f;--bad:#d9534f;--accent:#f2a900;--line:#e6dfc4;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--sky:#1d3a52;--grass:#3f8a2e;--grass2:#2d6b21;--card:#26261f;--ink:#f3f0df;--muted:#b9b6a0;--line:#3d3b2d}}
+:root[data-theme="dark"]{--sky:#1d3a52;--grass:#3f8a2e;--grass2:#2d6b21;--card:#26261f;--ink:#f3f0df;--muted:#b9b6a0;--line:#3d3b2d}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:Fredoka,"Trebuchet MS",Arial,sans-serif;background:var(--sky);color:var(--ink);min-height:100vh}
+.scene{position:relative;height:150px;overflow:hidden;background:linear-gradient(var(--sky) 0 55%,var(--grass) 55% 100%)}
+.scene span{position:absolute;font-size:34px;line-height:1}
+.sun{top:10px;right:18px;font-size:44px!important}
+.barn{left:12px;bottom:46px;font-size:56px!important}
+.cow{left:34%;bottom:14px;animation:bob 2.4s ease-in-out infinite}
+.hen{left:52%;bottom:12px;animation:hop 1.6s ease-in-out infinite}
+.sheep{bottom:10px;animation:walk 16s linear infinite}
+.farmer{left:70%;bottom:38px;animation:bob 1.8s ease-in-out infinite}
+.water{left:calc(70% + 34px);bottom:56px;font-size:22px!important;animation:drip 1.2s linear infinite}
+@keyframes bob{50%{transform:translateY(-6px)}}
+@keyframes hop{40%{transform:translateY(-12px)}}
+@keyframes walk{from{left:-10%}to{left:105%}}
+@keyframes drip{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(18px)}}
+@media (prefers-reduced-motion:reduce){.scene span{animation:none!important}}
+main{max-width:640px;margin:-28px auto 0;padding:0 14px 28px;position:relative}
+.panel{background:var(--card);border:3px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 6px 0 var(--grass2)}
+h1{font-size:clamp(26px,6vw,36px);margin:0 0 4px;line-height:1.1;font-weight:700}
+h2{font-size:22px;margin:0 0 6px}
+p{margin:0 0 12px;color:var(--muted);line-height:1.45}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-weight:600}
+.bar{height:12px;border-radius:8px;background:var(--line);overflow:hidden;margin-bottom:14px}
+.bar i{display:block;height:100%;background:var(--grass);transition:width .4s}
+.lv{display:flex;gap:12px;align-items:center;width:100%;text-align:left;font:inherit;color:var(--ink);background:var(--card);border:3px solid var(--line);border-radius:16px;padding:12px 14px;margin-bottom:10px;cursor:pointer}
+.lv:disabled{opacity:.5;cursor:not-allowed}
+.lv:not(:disabled):hover{border-color:var(--grass)}
+.lv .ic{font-size:34px}
+.lv b{display:block;font-size:18px}
+.lv small{color:var(--muted);font-size:14px}
+.lv .st{margin-left:auto;font-size:18px;white-space:nowrap}
+.btn{font:inherit;font-weight:700;font-size:18px;background:var(--accent);color:#2b2a22;border:0;border-radius:14px;padding:12px 22px;cursor:pointer;box-shadow:0 4px 0 #b57f00}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #b57f00}
+.btn.alt{background:var(--line);color:var(--ink);box-shadow:0 4px 0 var(--muted)}
+button:focus-visible{outline:4px solid #1e88e5;outline-offset:2px}
+.pic{font-size:56px;text-align:center;padding:10px;background:var(--sky);border-radius:16px;margin-bottom:14px;letter-spacing:6px}
+.q{font-size:20px;font-weight:600;margin-bottom:14px;line-height:1.35}
+.opt{display:block;width:100%;text-align:left;font:inherit;font-size:18px;color:var(--ink);background:var(--card);border:3px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px;cursor:pointer}
+.opt:not(:disabled):hover{border-color:var(--grass)}
+.opt.ok{border-color:var(--ok);background:#d8f3de;color:#14391f}
+.opt.bad{border-color:var(--bad);background:#fbdcda;color:#4a1513}
+.chips{display:flex;flex-wrap:wrap;gap:8px;min-height:50px;padding:8px;border-radius:14px}
+.ans{background:var(--sky);margin-bottom:12px}
+.chip{font:inherit;font-size:18px;font-weight:600;background:var(--card);color:var(--ink);border:3px solid var(--line);border-radius:12px;padding:8px 12px;cursor:pointer}
+.fb{margin-top:12px;padding:12px 14px;border-radius:14px;font-size:16px;line-height:1.4}
+.fb.ok{background:#d8f3de;color:#14391f}
+.fb.bad{background:#fbdcda;color:#4a1513}
+.fb button{margin-top:10px;display:block}
+.big{font-size:64px;text-align:center}
+.center{text-align:center}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.snd{position:fixed;top:calc(env(safe-area-inset-top,0px) + 8px);right:10px;z-index:20;font-size:22px;background:var(--card);border:3px solid var(--line);border-radius:50%;width:46px;height:46px;cursor:pointer}
+.mt{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mt div{display:flex;flex-direction:column;gap:8px}.mt .chip{text-align:left}
+.chip.ok{border-color:var(--ok);background:#d8f3de;color:#14391f}.chip.sel{border-color:var(--accent);background:#fff0c2;color:#2b2a22}
+.ti{width:100%;font:inherit;font-size:20px;padding:12px;border-radius:14px;border:3px solid var(--line);background:var(--card);color:var(--ink);margin-bottom:12px}
+.sum{background:var(--sky);border-radius:16px;padding:12px 14px;margin:8px 0 12px}.sum div{display:flex;justify-content:space-between;padding:4px 0;font-size:17px}button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}html{-webkit-text-size-adjust:100%}.btn,.opt,.chip{min-height:44px}.pic{overflow-wrap:anywhere}
+.tm{position:relative;height:20px;border-radius:10px;background:var(--line);overflow:hidden;margin-bottom:14px}.tm i{display:block;height:100%;width:100%;background:var(--accent)}.tm i.low{background:var(--bad)}.tm b{position:absolute;top:0;left:0;right:0;text-align:center;font-size:14px;line-height:20px}
+.rl{padding-left:22px;line-height:1.5;font-size:17px;margin:0 0 14px}.rl li{margin-bottom:8px}
+@media (max-width:480px){.pic{font-size:44px}.panel{padding:14px}.scene{height:120px}.scene span{font-size:28px}.opt{font-size:17px}}
+.dash{overflow-x:auto;margin-bottom:12px}.dash table{border-collapse:collapse;width:100%;font-size:15px}.dash th,.dash td{border:2px solid var(--line);padding:6px 8px;text-align:center;white-space:nowrap}.dash td:first-child,.dash th:first-child{text-align:left}.dash th{background:var(--sky)}
+.sum small{color:var(--muted);font-size:14px}.sum .tot{border-top:3px solid var(--line);margin-top:4px;padding-top:8px;font-size:20px;font-weight:700}
+</style>
+</head>
+<body>
+<button class="snd" id="snd" aria-label="Turn sound on or off">🔊</button>
+<div class="scene" aria-hidden="true">
+<span class="sun">☀️</span><span class="barn">🏚️</span><span class="cow">🐄</span><span class="hen">🐔</span>
+<span class="sheep" style="animation-delay:-4s">🐑</span><span class="sheep" style="animation-delay:-11s">🐖</span>
+<span class="farmer">🧑‍🌾</span><span class="water">💦</span>
+</div>
+<main><div class="panel" id="app"></div></main>
+<script>
+const LV=[
+{n:"SEEDLING STATION",d:"Meaning and time expressions",i:"🌱"},
+{n:"VEGETABLE GARDEN",d:"Affirmative and negative sentences",i:"🥕"},
+{n:"ANIMAL CARE",d:"Questions and verb to be",i:"🐄"},
+{n:"HARVEST BARN",d:"Spelling with -ing and review",i:"🌾"}];
+const Q=[[
+{s:"🐄🌾",q:"Look at the picture. What is happening?",o:["The cow is eating grass.","The cow are eating grass.","The cow eating grass."],a:0,e:"The cow is one animal, so we use is + eating."},
+{s:"🐔🥚",q:"Look at the picture. Which sentence is correct?",o:["The hen is lay an egg right now.","The hen are laying an egg right now.","The hen is laying an egg right now."],a:2,e:"Present Progressive describes an action in progress: is + laying."},
+{s:"🧑‍🌾🐖",q:"What is the farmer doing at the moment?",o:["He feeding the pigs.","He is feeding the pigs.","He is feed the pigs."],a:1,e:"Use is + verb-ing for an action happening now."},
+{s:"🐇💨",q:"Choose the best time expression: The rabbit is jumping ____.",o:["last night","yesterday","right now"],a:2,e:"Right now matches an action happening at this moment."},
+{s:"⏰",q:"Which sentence uses a time expression correctly?",o:["The goat is jumping yesterday.","The goat is jumping at the moment.","The goat is jumping last week."],a:1,e:"At the moment, now, right now, today and currently go with Present Progressive."}],
+[
+{s:"🧑‍🌾🚿🌱",q:"The farmer ____ watering the plants.",o:["am","is","are"],a:1,e:"The farmer is one person, so we use is."},
+{s:"🙋🍅",q:"I ____ picking tomatoes.",o:["am","is","are"],a:0,e:"I always goes with am."},
+{s:"🐖🐖💩",q:"The pigs ____ playing in the mud.",o:["is","am","are"],a:2,e:"The pigs is plural, so we use are."},
+{s:"🐇🥕",q:"Put the words in order.",w:["is","The","eating","rabbit","a","carrot"],a:"The rabbit is eating a carrot.",e:"Subject + is/am/are + verb-ing + the rest."},
+{s:"🐑😴",q:"Make this sentence negative: The sheep are sleeping.",o:["The sheep not are sleeping.","The sheep are not sleeping.","The sheep does not sleeping."],a:1,e:"Put not after am, is or are."}],
+[
+{s:"🧺🥚🙋‍♀️",q:"____ you collecting eggs?",o:["Is","Are","Am"],a:1,e:"You goes with are. In a question, are comes first."},
+{s:"🐄💧",q:"____ the cow drinking water?",o:["Is","Are","Do"],a:0,e:"The cow is one animal: Is the cow drinking water?"},
+{s:"🐑🐑🌳",q:"____ are the lambs running? They are running in the field.",o:["What","Where","Why"],a:1,e:"The answer is a place (in the field), so we ask Where."},
+{s:"🐖💤",q:"____ is the pig doing? It is sleeping.",o:["What","Where","Who"],a:0,e:"We ask What to find out about an action."},
+{s:"🐕🐈",q:"____ is the dog barking? Because the cat is chasing it.",o:["When","Why","Where"],a:1,e:"Because gives a reason, so we ask Why."}],
+[
+{s:"🥛🧑‍🌾",q:"Add -ing: The farmer is ____ cheese. (make)",o:["makeing","making","makking"],a:1,e:"Drop the silent e: make → making."},
+{s:"🐇🏃",q:"Add -ing: The rabbit is ____ fast. (run)",o:["runing","runing","running"],a:2,e:"Short word ending in vowel + consonant: double it. run → running."},
+{s:"🐥⚽",q:"Add -ing: The chicks are ____ in the yard. (play)",o:["playing","plaing","playying"],a:0,e:"Verbs ending in vowel + y just add -ing."},
+{s:"🏗️🚜",q:"These days, the farmers ____ a new barn.",o:["are building","is building","building"],a:0,e:"Around now actions use are + verb-ing. Farmers is plural."},
+{s:"🦆🌊",q:"Add -ing: The ducks are ____ in the pond. (swim)",o:["swiming","swimming","swimmming"],a:1,e:"swim → swimming. Double the last letter."}]];
+Q[3][1].o=["runing","runnning","running"];
+const X=[[
+{s:"🧩",q:"Match each picture with its sentence.",m:[["🐄🌾","The cow is eating grass."],["🐔🥚","The hen is laying an egg."],["🐑💤","The sheep is sleeping."],["🧑‍🌾🚿","The farmer is watering plants."]],e:"Each picture shows an action happening now: is + verb-ing."},
+{s:"📚🐄",q:"This week, I ____ a book about farms.",o:["am reading","is reading","are reading"],a:0,e:"I goes with am. This week shows an action around now."},
+{s:"🐑🐑🍽️",q:"Make a sentence about now.",w:["are","The","now","sheep","eating","right"],a:"The sheep are eating right now.",e:"The sheep are eating right now."},
+{s:"🐄🥛",q:"Type the correct form: Right now, the cow is ____ water. (drink)",t:1,a:"drinking",e:"is + drink + ing = is drinking."},
+{s:"🐓🌅",q:"Listen! The rooster ____ loudly right now.",o:["is crowing","are crowing","crowing"],a:0,e:"Right now shows an action in progress: is + crowing."}],
+[
+{s:"🧩",q:"Match the subject with am, is or are.",m:[["I","am"],["The goat","is"],["The ducks","are"],["We","are"]],e:"I = am. One person or animal = is. More than one = are."},
+{s:"🐔🌽",q:"Type the correct form: The hen is ____ corn. (eat)",t:1,a:"eating",e:"is + eat + ing = is eating."},
+{s:"🐔🐔😮",q:"Make a negative sentence.",w:["are","The","chickens","not","sleeping"],a:"The chickens are not sleeping.",e:"Subject + are + not + verb-ing."},
+{s:"👩‍🌾🌱",q:"Which sentence is correct?",o:["She are planting seeds.","She is planting seeds.","She planting seeds."],a:1,e:"She goes with is, and we need verb-ing."},
+{s:"🙋🥕",q:"Make a sentence about yourself.",w:["am","I","up","pulling","carrots"],a:"I am pulling up carrots.",e:"I + am + verb-ing."}],
+[
+{s:"🧩",q:"Match each question with its answer.",m:[["What is the goat doing?","It is eating hay."],["Where is the farmer working?","He is working in the garden."],["Why are you smiling?","Because I am happy."],["Is the cow sleeping?","Yes, it is."]],e:"What asks about an action, Where asks about a place, Why asks for a reason."},
+{s:"🐶🐶⚽",q:"Make a Yes/No question.",w:["Are","the","playing","puppies","outside"],a:"Are the puppies playing outside?",e:"In a question, Are comes first."},
+{s:"🐕🏃",q:"Which question is correct?",o:["Is they running?","Are they running?","Are they run?"],a:1,e:"They goes with are, and we need verb-ing."},
+{s:"🐔🥚",q:"Type the short answer: Is the hen laying an egg? Yes, it ____ .",t:1,a:"is",e:"Short answers use the same verb to be: Yes, it is."},
+{s:"🐐😂",q:"____ are you laughing? Because the goat is funny.",o:["Why","Where","What"],a:0,e:"Because gives a reason, so we ask Why."}],
+[
+{s:"🧩",q:"Match each verb with its -ing form.",m:[["write","writing"],["sit","sitting"],["help","helping"],["ride","riding"]],e:"Drop e: write, ride. Double the last letter: sit. Add -ing: help."},
+{s:"🧑‍🌾🥣",q:"Type the -ing form: The girl is ____ the lambs. (feed)",t:1,a:"feeding",e:"feed + ing = feeding."},
+{s:"🧑‍🌾✂️",q:"Type the -ing form: The farmer is ____ the grass. (cut)",t:1,a:"cutting",e:"cut → cutting. Double the t."},
+{s:"👷‍♂️🪵",q:"Make a sentence.",w:["are","The","building","farmers","a","fence","now"],a:"The farmers are building a fence now.",e:"Subject + are + verb-ing + the rest."},
+{s:"🥬🧑‍🌾",q:"Currently, my uncle ____ vegetables on his farm.",o:["is growing","are growing","growing"],a:0,e:"Currently shows an action around now: is growing."}]];
+Q.forEach((a,i)=>a.push(...X[i]));
+let mm,mi,sl,mo,QS,ambT,mute=false,AC;
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const OKS=["Great job!","Awesome!","Fantastic!","Well done!","Super farmer!"],BADS=["Good try! You can do it!","Almost there! Keep going!","Don’t worry, mistakes help us learn!"];
+function ac(){if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended")AC.resume();return AC}
+function tone(f,t,d,type="sine",v=.15,f2){if(mute)return;try{tone0(f,t,d,type,v,f2)}catch(e){}}
+function tone0(f,t,d,type,v,f2){const c=ac(),o=c.createOscillator(),g=c.createGain(),s=c.currentTime+t;o.type=type;o.frequency.setValueAtTime(f,s);if(f2)o.frequency.exponentialRampToValueAtTime(f2,s+d);g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(v,s+.02);g.gain.exponentialRampToValueAtTime(.001,s+d);o.connect(g).connect(c.destination);o.start(s);o.stop(s+d+.05)}
+function noise(t,d,v){if(mute)return;try{noise0(t,d,v)}catch(e){}}
+function noise0(t,d,v){const c=ac(),n=Math.floor(c.sampleRate*d),b=c.createBuffer(1,n,c.sampleRate),a=b.getChannelData(0);for(let i=0;i<n;i++)a[i]=(Math.random()*2-1)*(1-i/n);const s=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain();f.type="bandpass";f.frequency.value=2500;g.gain.value=v;s.buffer=b;s.connect(f).connect(g).connect(c.destination);s.start(c.currentTime+t)}
+const sfx={ok(){[523,659,784,1047].forEach((f,i)=>tone(f,i*.09,.4,"triangle",.18));noise(.25,.9,.08)},bad(){tone(392,0,.3,"sine",.14);tone(330,.2,.5,"sine",.14)},win(){[523,659,784,1047,1319].forEach((f,i)=>tone(f,i*.12,.5,"triangle",.18));noise(.4,1.6,.1)},tap(){tone(660,0,.1,"sine",.08)}};
+function amb(){clearInterval(ambT);if(mute)return;let n=0;const M=[523,659,784,659,523,659,784,0,880,784,698,784,659,587,523,0,523,659,784,1047,784,659,784,0,698,659,587,659,523,0,523,0],B=[131,175,131,196];ambT=setInterval(()=>{if(mute||document.hidden)return;const s=n%32,m=M[s];if(m)tone(m,0,.28,"triangle",.07);if(s%2===0)tone(B[s>>3]*(s%4?2:1),0,.22,"sine",.08);if(s%8===6)tone(1568,0,.1,"sine",.03);n++;if(Math.random()<.03){tone(2600,0,.12,"sine",.03,3400);tone(3000,.15,.12,"sine",.03,3800)}},230)}
+let tmr=null,TL=10;
+function stopT(){clearInterval(tmr);tmr=null}
+function startT(){stopT();const end=Date.now()+TL*1000;tmr=setInterval(()=>{const left=Math.max(0,end-Date.now()),b=$("#tb"),n=$("#tn");if(!b||!n){stopT();return}b.style.width=(left/TL/10)+"%";n.textContent=Math.ceil(left/1000);b.className=left<3500?"low":"";if(left<=0){stopT();timeUp()}},100)}
+function timeUp(){const q=QS[qi],f=$("#fb");if(!f||f.innerHTML)return;if(q.o)app.querySelectorAll(".opt").forEach(o=>{o.disabled=true;if(+o.dataset.i===q.a)o.classList.add("ok")});done(false,true)}
+function rules(){app.innerHTML=`<div class="big">📜</div><h1 class="center">How to play</h1><ol class="rl"><li>🧑‍🌾 Look at the picture and read each question. Use Present Progressive: am/is/are + verb-ing.</li><li>⏱️ You have <b>10 seconds</b> for multiple choice and fill in the blanks, and <b>15 seconds</b> for matching and sentence building.</li><li>🏛️ There are 4 stations with 10 questions in each station.</li><li>🧩 Questions can be multiple choice, matching, sentence building or fill in the blanks.</li><li>⭐ Get <b>6 out of 10</b> to open the next station.</li><li>🪙 Each correct answer gives you 10 coins.</li><li>🔊 Use the sound button to turn the music on or off.</li><li>💪 Mistakes are OK. You can play every station again!</li></ol><div class="row"><button class="btn" id="gr">I am ready!</button></div>`;$("#gr").onclick=()=>{sfx.tap();menu()}}
+function drawM(){const q=QS[qi];
+$("#ml").innerHTML=q.m.map((p,i)=>`<button class="chip ${mm.includes(i)?"ok":sl===i?"sel":""}" data-l="${i}" ${mm.includes(i)?"disabled":""}>${p[0]}</button>`).join("");
+$("#mr").innerHTML=mo.map(i=>`<button class="chip ${mm.includes(i)?"ok":""}" data-r="${i}" ${mm.includes(i)?"disabled":""}>${q.m[i][1]}</button>`).join("");
+app.querySelectorAll("[data-l]").forEach(b=>b.onclick=()=>{sl=+b.dataset.l;sfx.tap();drawM()});
+app.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{if(sl===null)return;if(sl===+b.dataset.r){mm.push(sl);sl=null;sfx.tap();drawM();if(mm.length===q.m.length)done(mi===0)}else{mi++;sl=null;tone(300,0,.25,"sine",.1);drawM()}})}
+const $=s=>document.querySelector(s),app=$("#app");
+let st={un:[true,false,false,false],best:[0,0,0,0],coins:0},cur,qi,sc,chosen,pool;
+const shuf=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const fname=()=>{const n=st.farm||"Happy";return /farm$/i.test(n)?n:n+" Farm"};
+const KD=q=>q.m?"Matching":q.t?"Fill in the blanks":q.w?"Sentence building":"Multiple choice";
+const types=i=>{const c={};Q[i].forEach(q=>{const k=KD(q);c[k]=(c[k]||0)+1});return Object.entries(c).map(([k,v])=>k+" ×"+v).join(", ")};
+let DB=null,U=null,isT=false,unsub=null;
+function save(){const el=$("#sv");if(!DB){if(el)el.textContent="Your score was not sent to your teacher (offline mode).";return}
+let h=0;for(const ch of (st.cls+"|"+st.who).toLowerCase())h=(h*31+ch.charCodeAt(0))|0;
+const msg=t=>{const e=$("#sv");if(e)e.textContent=t};
+(async()=>{try{const uid=await U.id(),ref=DB.doc("scores/"+uid),sn=await ref.get(),old=(sn.exists&&sn.data().students)||{};old["s"+(h>>>0).toString(36)]={who:st.who||"Student",cls:st.cls||"-",farm:fname(),best:st.best,total:st.best.reduce((a,b)=>a+b),at:Date.now()};await ref.set({students:old});msg("✅ Your score was sent to your teacher.")}catch(e){msg("Your score could not be sent. Please tell your teacher.")}})()}
+function dash(){if(!DB)return;if(unsub)unsub();
+app.innerHTML=`<div class="top"><span>📋 Teacher dashboard</span><button class="btn alt" id="bk">Back</button></div><p id="dn">Loading…</p><div class="dash" id="dt"></div><div class="row"><button class="btn" id="csv">Download CSV</button></div>`;
+let rows=[];$("#bk").onclick=()=>{if(unsub)unsub();unsub=null;nameScreen()};
+unsub=DB.collection("scores").onSnapshot(s=>{rows=s.docs.flatMap(d=>Object.values(d.data().students||{})).sort((a,b)=>(a.cls+" "+a.who).localeCompare(b.cls+" "+b.who,undefined,{numeric:true}));
+const avg=rows.length?(rows.reduce((a,r)=>a+r.total,0)/rows.length).toFixed(1):"0";
+$("#dn").textContent=rows.length+" students · average "+avg+"/40";
+$("#dt").innerHTML=`<table><tr><th>Name</th><th>Class</th><th>Farm</th>${LV.map((l,i)=>`<th>L${i+1}<br>${l.n.split(" ")[0]}</th>`).join("")}<th>Total /40</th></tr>`+rows.map(r=>`<tr><td>${esc(r.who)}</td><td>${esc(r.cls)}</td><td>${esc(r.farm)}</td>${[0,1,2,3].map(i=>`<td>${(r.best[i]||0)}/10</td>`).join("")}<td><b>${r.total}</b></td></tr>`).join("")+`</table>`},()=>{$("#dn").textContent="Could not load scores."});
+$("#csv").onclick=async()=>{try{const dl=await claude.use("downloads");if(!dl)return;const q=v=>'"'+String(v).replace(/"/g,'""')+'"';const t=["Name,Class,Farm,L1,L2,L3,L4,Total"].concat(rows.map(r=>[q(r.who),q(r.cls),q(r.farm),...[0,1,2,3].map(i=>(r.best[i]||0)),r.total].join(","))).join("\n");await dl.save({filename:"farm-adventure-scores.csv",data:"\ufeff"+t})}catch(e){}}}
+function nameScreen(){app.innerHTML=`<div class="big">🏡</div><h1 class="center">Welcome to the farm!</h1><p class="center">Tell us about you and your farm.</p><input class="ti" id="sn" maxlength="30" placeholder="Your name" autocomplete="off" aria-label="Your name"><input class="ti" id="sk" maxlength="12" placeholder="Class and number (for example M.1/2 No. 15)" autocomplete="off" aria-label="Class and number"><input class="ti" id="fn" maxlength="20" placeholder="Farm name (for example: Sunny Meadow)" autocomplete="off" aria-label="Farm name"><div class="row"><button class="btn" id="go0">Start my farm</button><button class="btn alt" id="td" hidden>Teacher dashboard</button></div>`;const f=()=>{st.farm=$("#fn").value.trim()||"Happy";st.who=$("#sn").value.trim()||"Student";st.cls=$("#sk").value.trim()||"-";sfx.tap();rules()};$("#go0").onclick=f;$("#fn").onkeydown=e=>{if(e.key==="Enter")f()};$("#td").onclick=dash;$("#td").hidden=!(isT&&DB);$("#sn").focus()}
+function menu(){
+ const stars=b=>b>=9?"⭐⭐⭐":b>=8?"⭐⭐":b>=6?"⭐":"";
+ app.innerHTML=`<div class="top"><span>🏡 ${esc(fname())}</span><span>🪙 ${st.coins} coins</span></div><h1>Present Progressive Farm Adventure</h1><p>Welcome, young farmer! Choose, match, type and build sentences about the farm. Score 6 out of 10 to open the next station. Tap anywhere to start the farm music, and use the 🔊 button to turn sound on or off.</p>`+
+ LV.map((l,i)=>`<button class="lv" data-i="${i}" ${st.un[i]?"":"disabled"}><span class="ic">${st.un[i]?l.i:"🔒"}</span><span><b>Level ${i+1}: ${l.n}</b><small>${l.d}</small></span><span class="st">${stars(st.best[i])}</span></button>`).join("");
+ app.querySelectorAll(".lv").forEach(b=>b.onclick=()=>start(+b.dataset.i));
+}
+function start(l){cur=l;qi=0;sc=0;QS=shuf(Q[l]);show()}
+function show(){
+ const q=QS[qi];chosen=[];
+ let h=`<div class="top"><span>${LV[cur].i} ${LV[cur].n}</span><span>Question ${qi+1} of 10</span></div><div class="bar"><i style="width:${qi*10}%"></i></div><div class="tm"><i id="tb"></i><b id="tn">${(q.w||q.m)?15:10}</b></div><div class="pic" aria-hidden="true">${q.s}</div><div class="q">${q.q}</div>`;
+ if(q.m){h+=`<div class="mt"><div id="ml"></div><div id="mr"></div></div>`}else if(q.t){h+=`<input class="ti" id="ti" autocomplete="off" autocapitalize="none" spellcheck="false" aria-label="Your answer"><div class="row"><button class="btn" id="chk">Check answer</button></div>`}else if(q.w){pool=shuf(q.w);h+=`<div class="chips ans" id="ans" aria-label="Your sentence"></div><div class="chips" id="pool"></div><div class="row"><button class="btn" id="chk">Check answer</button></div>`}
+ else{q.idx=shuf(q.o.map((_,i)=>i));h+=q.idx.map(i=>`<button class="opt" data-i="${i}">${q.o[i]}</button>`).join("")}
+ h+=`<div id="fb" aria-live="polite"></div>`;
+ TL=(q.w||q.m)?15:10;app.innerHTML=h;startT();
+ if(q.m){mm=[];mi=0;sl=null;mo=shuf(q.m.map((_,i)=>i));drawM()}else if(q.t){const ti=$("#ti");ti.focus();const ck=()=>{if(ti.value.trim())done(ti.value.trim().toLowerCase()===q.a.toLowerCase())};$("#chk").onclick=ck;ti.onkeydown=e=>{if(e.key==="Enter")ck()}}else if(q.w){draw();$("#chk").onclick=()=>done(chosen.map(i=>pool[i]).join(" ")===q.a.replace(/[.?]$/,""))}
+ else app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+  app.querySelectorAll(".opt").forEach(o=>{o.disabled=true;if(+o.dataset.i===q.a)o.classList.add("ok")});
+  if(+b.dataset.i!==q.a)b.classList.add("bad");done(+b.dataset.i===q.a)});
+}
+function draw(){
+ $("#ans").innerHTML=chosen.map(i=>`<button class="chip" data-r="${i}">${pool[i]}</button>`).join("");
+ $("#pool").innerHTML=pool.map((w,i)=>chosen.includes(i)?"":`<button class="chip" data-a="${i}">${w}</button>`).join("");
+ app.querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>{chosen.push(+b.dataset.a);draw()});
+ app.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{chosen=chosen.filter(x=>x!==+b.dataset.r);draw()});
+}
+function done(ok,late){if($("#fb").innerHTML)return;stopT();
+ const q=QS[qi];if(ok){sc++;st.coins+=10}sfx[ok?"ok":"bad"]();const ti=$("#ti");if(ti)ti.disabled=true;
+ const c=$("#chk");if(c)c.disabled=true;
+ app.querySelectorAll(".chip").forEach(b=>b.disabled=true);
+ $("#fb").innerHTML=`<div class="fb ${ok?"ok":"bad"}"><b>${ok?pick(OKS)+" +10 coins 🪙":late?"⏰ Time’s up! Keep going, you can do it!":pick(BADS)}</b> ${ok||q.m?"":"The correct answer: "+(q.o?q.o[q.a]:q.a)+"<br>"}${q.e}<button class="btn" id="nx">${qi<9?"Next question":"See results"}</button></div>`;
+ $("#nx").focus();$("#nx").onclick=()=>{qi++;qi<10?show():result()};
+}
+function result(){
+ const pass=sc>=6;st.best[cur]=Math.max(st.best[cur],sc);
+ if(pass&&cur<3)st.un[cur+1]=true;
+ const last=pass&&cur===3;sfx[pass?"win":"bad"]();const sum=cur===3?`<div class="sum"><div class="tot" style="border:0;margin:0;padding:0 0 6px"><span>🏡 ${esc(fname())}</span></div>${LV.map((l,i)=>`<div><span>${l.i} ${l.n}<br><small>(${types(i)})</small></span><b>${st.best[i]}/10</b></div>`).join("")}<div class="tot"><span>Final score</span><b>${st.best.reduce((a,b)=>a+b)}/40</b></div></div>`:"";
+ app.innerHTML=`<div class="big">${last?"🏆":pass?"🎉":"🌱"}</div><h2 class="center">${last?"You are a Farm Champion!":pass?"Level complete!":"Keep growing!"}</h2><p class="center">You scored ${sc} out of 10. Total coins: ${st.coins} 🪙</p><p class="center" id="sv"></p><p class="center">${last?"You finished all four stations. Well done!":pass?"The next station is open.":"You need 6 correct answers to open the next station. Don’t give up, you can do it! 💪"}</p>${sum}<div class="row">${pass&&cur<3?'<button class="btn" id="go">Next level</button>':''}<button class="btn alt" id="again">Play again</button><button class="btn alt" id="mn">Map</button></div>`;
+ if($("#go"))$("#go").onclick=()=>start(cur+1);save();
+ $("#again").onclick=()=>start(cur);$("#mn").onclick=menu;
+}
+$("#snd").onclick=()=>{mute=!mute;$("#snd").textContent=mute?"🔇":"🔊";if(mute)clearInterval(ambT);else{ac();amb()}};
+document.addEventListener("pointerdown",()=>{ac();if(!mute)amb()},{once:true});
+nameScreen();
+(async()=>{try{const u=await claude.use("user");U=u;DB=await claude.use("db");isT=!!(u&&await u.canEdit());const b=$("#td");if(b)b.hidden=!(isT&&DB)}catch(e){}})();
+</script>
+</body>
+</html>
